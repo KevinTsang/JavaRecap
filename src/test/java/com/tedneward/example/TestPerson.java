@@ -1,6 +1,8 @@
 package com.tedneward.example;
 
 import java.beans.*;
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
 import java.util.*;
 import org.junit.Test;
 import static org.junit.Assert.*;
@@ -44,7 +46,7 @@ public class TestPerson {
   }
   
   @Test
-  public void exercisePesonEquals() {
+  public void exercisePersonEquals() {
     Person p1 = new Person("Ted", 43, 250000);
     Person p2 = p1;
     assertEquals(p1, p2);
@@ -91,16 +93,15 @@ public class TestPerson {
   public void catchPropertyChange() {
     Person ted = new Person("Ted", 43, 250000);
 
-    // ============ YOUR CHANGES BEGIN HERE
-    // Call addPropertyChangeListener with a PropertyChangedListener
-    // that has the following code in it:
-    /*
-    assertEquals("ssn", pce.getPropertyName());
-    assertEquals("", pce.getOldValue());
-    assertEquals("012-34-5678", pce.getNewValue());
-    */
+    ted.addPropertyChangeListener(new PropertyChangeListener() {
+      public void propertyChange(PropertyChangeEvent pce) {
 
-    // ============ YOUR CHANGES END HERE
+        assertEquals("ssn", pce.getPropertyName());
+        assertEquals("", pce.getOldValue());
+        assertEquals("012-34-5678", pce.getNewValue());
+      }
+    });
+
     
     assertEquals(false, ted.getPropertyChangeFired());
     ted.setSSN("012-34-5678");
